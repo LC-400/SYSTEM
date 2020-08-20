@@ -1,0 +1,38 @@
+Noen vanlige systemkommandoer
+
+
+-logge inn som root i eksisterende sesjon: "su" (passord må oppgis)
+
+-beholde sudo-tilgang for sesjonen: "sudo -s"
+
+-hvis en vanlig bruker kan kjøre "sudo <kommando>", betyr det at brukeren er i sudoers-listen (har root-rettigheter)
+
+-kan en vanlig bruker ikke kjøre "sudo <kommando>", er brukeren ikke i sudoers-listen og må legges til der.
+Prosedyre for å legge til bruker er 1) logg inn som root, 2)kjør "visudo" (åpner /etc/sudoers). "Ctrl + O" lagrer endringer,
+"Ctrl+x" avslutter tekst-editoren, "Ctrl+c" avrbryter redigeringen av filen, 3) Under "#User privilege specification", legg til
+"<brukernavn>", ALL=(ALL:ALL) ALL
+
+-gi skript kjøre-rettighet:"chmod u+x skriptnavn"
+
+-kjøre skript: ./skriptnavn
+
+-finne hardware: pci="lspci", usb="lsusb", kjernemoduler lastet="dmesg"
+
+-liste ut filrettigheter og filtype i menneskevennlig format: "stat -c %F_%a_%n filnavn" (4=les,2=skriv,1=kjør - rettighetene
+er akkumulative)
+
+-sjekke nettverkstilkoblinger løpende:"sudo watch -n 1 ifconfig" (evt. bruk grep -i "tekst" for filtrert utlisting)
+
+-koble til seriell port: screen /dev/console_port (setter standard baud-rate) (øvrige: minicom, putty og cu)
+
+-samle kommandoer i skript som kjøres med ett argument, f.eks for tty eller ifconfig: 
+#!/bin/bash
+FILE=$1
+sett kjørerettighet med "chmod u+x skriptnavn". Kjør med "./skriptnavn"
+Flere argumenter:
+FILE=$1,$2,$3 osv
+Liste ut argumentene (for feilsjekk o.l): "echo $@/$*"
+
+-norsk keyboard på raspberry:"/etc/default/keyboard: XKBLAYOUT="no"
+
+
